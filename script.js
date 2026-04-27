@@ -52,6 +52,8 @@ function getCmd() {
 
        if(cmd.startsWith("clear")) {
             clearTextbox(textbox, 0);
+            textbox.cols = 47;
+            textbox.rows = 0;
 
         } else if(cmd.startsWith("help")) {
 
@@ -95,8 +97,15 @@ function getCmd() {
 
             } else if(cmd.startsWith("curl")) {
                 let url = cmd.split("curl ")[1];
-
                 let xhttp = new XMLHttpRequest();
+
+                if(url == "-u") {
+                   let final_inp = url.split("-u ")[1];
+                   xhttp.open("GET", final_inp);
+                   xhttp.send();
+                }
+
+
                 xhttp.onload = function() {
                    textbox.innerHTML += this.responseText;
                 if(textbox.innerHTML.includes("\n")) {
